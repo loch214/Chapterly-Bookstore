@@ -675,18 +675,27 @@ h3 {
     color: #fff !important;
 }
 
-.btn-wishlist, .btn-wishlist .bi-heart-fill {
-    background: transparent !important;
-    color: #dc2626 !important;
-    border: none;
-    font-size: 1.3rem;
-    padding: 0.3em 0.7em;
-    border-radius: 50%;
-    transition: background 0.2s, color 0.2s;
+.btn-wishlist {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    min-width: unset !important;
+    min-height: unset !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.18s;
 }
-.btn-wishlist:hover, .btn-wishlist .bi-heart-fill:hover {
-    background: #fee2e2 !important;
-    color: #991b1b !important;
+.btn-wishlist i {
+    font-size: 1.6rem;
+    color: #b91c1c;
+    transition: color 0.18s;
+}
+.btn-wishlist:hover i, .btn-wishlist:focus i {
+    color: #ef4444;
 }
 
 input, textarea, select, .form-control {
@@ -869,39 +878,18 @@ body.dark-mode .table .list-unstyled {
 }
 
 /* --- Footer Styles --- */
-.footer {
-    background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
-    color: #e2e8f0;
-    padding: 3rem 0 1rem 0;
-    margin-top: 1rem;
+.footer, .footer-features, .footer .feature-item, .footer .footer-links a, .footer .footer-contact, .footer .footer-bottom, .footer h5, .footer p, .footer-features .feature-item h6, .footer-features .feature-item p {
+    color: #fff !important;
+    font-weight: 400 !important;
+    text-shadow: none !important;
 }
-
-.footer h5 {
-    color: #fff;
-    font-weight: 700;
-    margin-bottom: 1.2rem;
-    font-size: 1.1rem;
+body.dark-mode .footer, body.dark-mode .footer-features, body.dark-mode .footer .feature-item, body.dark-mode .footer .footer-links a, body.dark-mode .footer .footer-contact, body.dark-mode .footer .footer-bottom, body.dark-mode .footer h5, body.dark-mode .footer p, body.dark-mode .footer-features .feature-item h6, body.dark-mode .footer-features .feature-item p {
+    color: #fff !important;
+    font-weight: 400 !important;
+    text-shadow: none !important;
 }
-
-.footer-links {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.footer-links li {
-    margin-bottom: 0.8rem;
-}
-
-.footer-links a {
-    color: #e2e8f0;
-    text-decoration: none;
-    transition: color 0.2s;
-    font-size: 0.95rem;
-}
-
-.footer-links a:hover {
-    color: #60a5fa;
+.footer .footer-links a:hover {
+    color: #fbbf24 !important;
 }
 
 .footer-contact {
@@ -1063,7 +1051,7 @@ body.dark-mode .homepage-bg::before {
 }
 
 h3.homepage-featured {
-    text-shadow: 0 2px 8px rgba(0,0,0,0.35), 0 1px 2px rgba(0,0,0,0.25);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35), 0 1px 2px rgba(0, 0, 0, 0.25);
 }
 
 .homepage-text-overlay {

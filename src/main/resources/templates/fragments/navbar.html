@@ -1,0 +1,79 @@
+<!-- Navbar Fragment -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="navbar">
+    <div class="container">
+        <a class="navbar-brand fw-bold fs-3" href="/">
+            <span class="brand-icon"><i class="bi bi-book-half"></i></span>Chapterly
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- Dark mode toggle button (moon icon) -->
+        <button id="darkModeToggle" class="btn btn-darkmode btn-sm ms-2 d-lg-none" type="button" title="Toggle dark mode">
+            <i class="bi bi-moon"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <!-- Removed Books nav link -->
+            </ul>
+            
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item d-flex align-items-center">
+                    <!-- Dark mode toggle button (moon icon) for desktop -->
+                    <button id="darkModeToggleDesktop" class="btn btn-darkmode btn-sm me-2 d-none d-lg-inline" type="button" title="Toggle dark mode">
+                        <i class="bi bi-moon"></i>
+                    </button>
+                </li>
+                <li class="nav-item dropdown" th:if="${session.user != null}">
+                    <a class="nav-link dropdown-toggle" href="#" id="userMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-person-circle"></i> Account
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
+                        <li><a class="dropdown-item" href="/cart"><i class="bi bi-cart"></i> Cart <span class="badge bg-danger ms-1" id="cartCount">0</span></a></li>
+                        <li><a class="dropdown-item" href="/wishlist"><i class="bi bi-heart"></i> Wishlist <span class="badge bg-danger ms-1" id="wishlistCount" style="display: none;">0</span></a></li>
+                        <li><a class="dropdown-item" href="/order/profile">My Profile</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="/logout">Logout</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item" th:unless="${session.user != null}">
+                    <a href="/login" class="btn btn-login btn-sm me-2">Login</a>
+                    <a href="/signup" class="btn btn-signup btn-sm">Sign Up</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Dark Mode Script Fragment -->
+<script th:fragment="darkmode-script">
+// Dark mode toggle functionality
+function setDarkMode(enabled) {
+    if (enabled) {
+        document.body.classList.add('dark-mode');
+        document.documentElement.classList.add('dark-mode');
+        localStorage.setItem('darkMode', 'true');
+                } else {
+        document.body.classList.remove('dark-mode');
+        document.documentElement.classList.remove('dark-mode');
+        localStorage.setItem('darkMode', 'false');
+            }
+    }
+
+function toggleDarkMode() {
+    const isDark = document.body.classList.contains('dark-mode');
+    setDarkMode(!isDark);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Dark mode toggle event listeners
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const darkModeToggleDesktop = document.getElementById('darkModeToggleDesktop');
+    if (darkModeToggle) darkModeToggle.addEventListener('click', toggleDarkMode);
+    if (darkModeToggleDesktop) darkModeToggleDesktop.addEventListener('click', toggleDarkMode);
+    // Set initial dark mode state from localStorage
+    if (localStorage.getItem('darkMode') === 'true') {
+        document.body.classList.add('dark-mode');
+        document.documentElement.classList.add('dark-mode');
+    }
+});
+</script> 

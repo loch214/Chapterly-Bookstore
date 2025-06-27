@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Privacy Policy - Chapterly</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <div th:replace="fragments/navbar :: navbar"></div>
+    <div class="container mt-5 mb-xxl">
+        <h1>Privacy Policy</h1>
+        <p>Your privacy is important to us. This policy explains how we collect, use, and protect your information when you use Chapterly.</p>
+        <ul>
+            <li><b>Information Collection:</b> We collect your name, email, address, and payment details only for order processing and customer support.</li>
+            <li><b>Use of Information:</b> Your data is used to fulfill orders, provide support, and improve our services. We do not sell or share your information with third parties except as required for order fulfillment.</li>
+            <li><b>Cookies:</b> We use cookies to enhance your browsing experience and for analytics. You can disable cookies in your browser settings.</li>
+            <li><b>Payment Security:</b> All transactions are encrypted and processed securely. We do not store your payment card details.</li>
+            <li><b>Data Retention:</b> We retain your information only as long as necessary for legal and business purposes.</li>
+            <li><b>Your Rights:</b> You can request to view, update, or delete your personal information at any time by contacting us.</li>
+        </ul>
+        <p>If you have any questions about our privacy practices, please contact us at <a href="mailto:support@chapterly.com">support@chapterly.com</a>.</p>
+    </div>
+    <div th:replace="fragments/footer :: footer"></div>
+    <div th:replace="fragments/navbar :: darkmode-script"></div>
+</body>
+</html> 

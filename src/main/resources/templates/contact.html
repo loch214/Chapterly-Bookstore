@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Contact Us - Chapterly</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <div th:replace="fragments/navbar :: navbar"></div>
+    <div class="container mt-4 mb-xxl">
+        <h1>Contact Us</h1>
+        <p><i class="bi bi-geo-alt"></i> <a href="https://www.google.com/maps/@6.9129159,79.8707782,3a,75y,84.66h,73.92t/data=!3m7!1e1!3m5!1sIveBoi2ChqZ5PWznuLO5Rw!2e0!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D16.0817984566812%26panoid%3DIveBoi2ChqZ5PWznuLO5Rw%26yaw%3D84.65588446813466!7i16384!8i8192?entry=ttu&g_ep=EgoyMDI1MDYxNy4wIKXMDSoASAFQAw%3D%3D" target="_blank">123 Book Street, Reading Avenue</a></p>
+        <p><i class="bi bi-telephone"></i> +94 76 611 2681</p>
+        <p><i class="bi bi-envelope"></i> support@chapterly.com</p>
+        <p>
+            <a href="https://www.instagram.com/loch._.d/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;margin-right:16px;">
+                <i class="bi bi-instagram" style="font-size:1.5rem;vertical-align:middle;"></i> Instagram
+            </a>
+            <a href="https://wa.me/94766112681" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">
+                <i class="bi bi-whatsapp" style="font-size:1.5rem;vertical-align:middle;"></i> WhatsApp
+            </a>
+        </p>
+    </div>
+    <div th:replace="fragments/footer :: footer"></div>
+    <div th:replace="fragments/navbar :: darkmode-script"></div>
+</body>
+</html> 

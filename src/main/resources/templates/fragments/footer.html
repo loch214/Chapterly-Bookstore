@@ -1,0 +1,141 @@
+<!-- Features Section and Footer Fragment -->
+<div th:fragment="footer">
+
+    <!-- These styles are specifically designed to make the footer more compact. -->
+    <!-- They will override other stylesheets to ensure the changes are visible. -->
+    <style>
+        .footer-features.compact-footer {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            margin-bottom: 0; /* Ensures no gap */
+        }
+        .footer.compact-footer {
+            padding-top: 2rem; /* More space at the top of the main footer */
+            padding-bottom: 1.5rem;
+        }
+        /* Tighter spacing for links in the footer */
+        .compact-footer .footer-links li {
+            margin-bottom: 4px; 
+        }
+        .compact-footer .footer-links li a {
+            padding-top: 2px;
+            padding-bottom: 2px;
+        }
+        /* Reduce space below the column titles (h5) */
+        .compact-footer h5 {
+            margin-bottom: 0.75rem !important;
+        }
+        /* Reduce space for contact info and newsletter text */
+        .compact-footer .footer-contact p,
+        .compact-footer .newsletter-text {
+            margin-bottom: 0.5rem;
+        }
+        /* Reduce space before the final copyright line */
+        .compact-footer .footer-bottom {
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+        }
+    </style>
+
+    <!-- Features Section -->
+    <div class="footer-features compact-footer">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-3 col-6 mb-3 mb-md-0">
+                    <div class="feature-item">
+                        <i class="bi bi-truck"></i>
+                        <div>
+                            <h6>Islandwide Delivery</h6>
+                            <p class="mb-0 small">Fast & reliable shipping</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6 mb-3 mb-md-0">
+                    <div class="feature-item">
+                        <i class="bi bi-shield-check"></i>
+                        <div>
+                            <h6>Secure Payments</h6>
+                            <p class="mb-0 small">100% secure transactions</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6 mb-3 mb-md-0">
+                    <div class="feature-item">
+                        <i class="bi bi-tag"></i>
+                        <div>
+                            <h6>Best Prices</h6>
+                            <p class="mb-0 small">Competitive pricing</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="feature-item">
+                        <i class="bi bi-headset"></i>
+                        <div>
+                            <h6>24/7 Support</h6>
+                            <p class="mb-0 small">Dedicated customer care</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="footer compact-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li><a href="/books">All Books</a></li>
+                        <li><a href="/about">About Us</a></li>
+                        <li><a href="/contact">Contact Us</a></li>
+                        <li><a href="/privacy-policy">Privacy Policy</a></li>
+                        <li><a href="/terms">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                    <h5>Categories</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li><a href="/category/Fiction">Fiction</a></li>
+                        <li><a href="/category/Science%20Fiction">Science Fiction</a></li>
+                        <li><a href="/category/Fantasy">Fantasy</a></li>
+                        <li><a href="/category/Mystery">Mystery</a></li>
+                        <li><a href="/category/Romance">Romance</a></li>
+                        <li><a href="/category/Horror">Horror</a></li>
+                        <li><a href="/category/Historical">Historical</a></li>
+                        <li><a href="/category/Young%20Adult">Young Adult</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                    <h5>Contact Us</h5>
+                    <div class="footer-contact">
+                        <p class="d-flex"><i class="bi bi-geo-alt pe-2 pt-1"></i> <a href="https://www.google.com/maps/@6.9129159,79.8707782,3a,75y,84.66h,73.92t/data=!3m7!1e1!3m5!1sIveBoi2ChqZ5PWznuLO5Rw!2e0!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D16.0817984566812%26panoid%3DIveBoi2ChqZ5PWznuLO5Rw%26yaw%3D84.65588446813466!7i16384!8i8192?entry=ttu&g_ep=EgoyMDI1MDYxNy4wIKXMDSoASAFQAw%3D%3D" target="_blank">76 Barnes Pl<br>Colombo, Western Province</a></p>
+                        <p class="d-flex"><i class="bi bi-telephone pe-2 pt-1"></i> <a href="tel:+94766112681" style="color:inherit;text-decoration:none;">+94 76 611 2681</a></p>
+                        <p class="d-flex"><i class="bi bi-envelope pe-2 pt-1"></i> support@chapterly.com</p>
+                    </div>
+                    <div class="footer-social mt-2">
+                        <a href="https://www.instagram.com/loch._.d/" target="_blank" rel="noopener"><i class="bi bi-instagram"></i></a>
+                        <a href="https://wa.me/94766112681" target="_blank" rel="noopener"><i class="bi bi-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5>Newsletter</h5>
+                    <p class="small newsletter-text">Subscribe to receive updates, access to exclusive deals, and more.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Enter your email" required>
+                        <button type="submit">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom border-top">
+                <p class="mb-0 text-center">© 2025 Chapterly. All rights reserved. | Designed with <i class="bi bi-heart-fill text-danger"></i> for book lovers</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Footer Script -->
+    <script src="/js/footer.js"></script>
+    <script src="/js/navbar.js"></script>
+</div>

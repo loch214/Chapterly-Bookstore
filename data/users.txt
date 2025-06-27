@@ -1,0 +1,5 @@
+1,admin,admin@example.com,$2a$10$V2XiUBJ/4m9y2ItQ39.eVeNGg5W575xDk.o.NTG7syaGLY3byErEu,ADMIN,true
+2,user3,user3@example.com,$2a$10$Tggg6hGPTETWPIseZSqScOqP2SnAc0TpHR2edp6cTXYK4mMpXElJW,USER,true
+3,user,user@example.com,$2a$10$gjE9hf/GdfaNvGCSvLQbbOVCtUxrCH34FXZyW93X5f9VxEVVPOVa.,USER,true
+4,user2,user2@example.com,$2a$10$9/f1QAXPg7h4gSqtrMNQ9eQZ0WgR.P3fcUovWG/SSdF14RdVuD/62,USER,true
+5,jenny,jenny21@gmail.com,$2a$10$y3EhZE9M7kxlUDFo56n30uhKzev9t3nCurFfNXIvt7uToNX3I/S.a,USER,true

@@ -1,0 +1,1 @@
+1,user,user@example.com,$2a$10$fUa7pzAzr8k8DAxHq6Ex0u9YMpEjs/h2t6AaeIYjdJ3r9eTTxy0Lm,USER,true

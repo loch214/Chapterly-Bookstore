@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout - Chapterly</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <script>if (localStorage.getItem('darkMode') === 'true') { document.documentElement.classList.add('dark-mode'); document.body.classList.add('dark-mode'); }</script>
+    <style>
+        .order-summary-table {
+            width: 100%;
+            margin-bottom: 0;
+            background: transparent;
+            color: #23263a;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+        .order-summary-table th {
+            background: #2563eb;
+            color: #fff;
+            font-weight: 600;
+            border: none;
+            font-size: 1.08rem;
+        }
+        .order-summary-table td {
+            background: #fff;
+            color: #23263a;
+            border-top: 1px solid #e5e7eb;
+            vertical-align: middle;
+            font-size: 1rem;
+        }
+        .order-summary-table tfoot td {
+            background: #f3f4f6;
+            color: #23263a;
+            font-weight: bold;
+            font-size: 1.1rem;
+            border-top: 2px solid #2563eb;
+        }
+        body.dark-mode .order-summary-table th {
+            background: #2563eb;
+            color: #fff;
+        }
+        body.dark-mode .order-summary-table td {
+            background: #181c2a;
+            color: #fff;
+            border-top: 1px solid #232b3e;
+        }
+        body.dark-mode .order-summary-table tfoot td {
+            background: #232b3e;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <div th:replace="fragments/navbar :: navbar"></div>
+
+    <!-- Main Content -->
+    <div class="main-content books-bg">
+        <div class="container mt-4 mb-xxl">
+            <h2 class="page-title">Checkout</h2>
+            <div class="glass-bg p-4 mb-4">
+            <form th:action="@{/order/checkout}" method="post" id="checkoutForm">
+                <div class="row">
+                    <!-- Left Column: Shipping and Payment Information (8/12 width) -->
+                    <div class="col-lg-8">
+                        <h3 class="page-title mb-3">Shipping Information</h3>
+                        <div class="mb-3">
+                            <label for="contactId" class="form-label">Select a saved address</label>
+                            <select class="form-select" id="contactId" name="contactId">
+                                <option value="">-- Enter new address --</option>
+                                <option th:each="contact : ${contacts}" th:value="${contact.id}" th:text="${contact.nickname + ' - ' + contact.address + ' (' + contact.phoneNumber + ')'}"></option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Address</label>
+                            <input type="text" class="form-control" id="address" name="address" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="phoneNumber" class="form-label">Phone Number</label>
+                            <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" required>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" value="true" id="saveNicknameCheck" name="saveNickname">
+                            <label class="form-check-label" for="saveNicknameCheck">Save this information for next time</label>
+                        </div>
+                        <div class="mb-3" id="nicknameDiv" style="display:none;">
+                            <label for="saveNickname" class="form-label">Nickname for this address <span class="text-muted" style="font-weight:normal;">(e.g. Home, Office...)</span></label>
+                            <input type="text" class="form-control" id="saveNickname" name="saveNickname" placeholder="e.g. Home, Office...">
+                        </div>
+
+                        <h3 class="page-title mb-3 mt-4">Payment Method</h3>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="paymentMethod" id="creditCardRadio" value="Credit Card" checked>
+                            <label class="form-check-label" for="creditCardRadio">Credit card</label>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="radio" name="paymentMethod" id="codRadio" value="Cash on Delivery">
+                            <label class="form-check-label" for="codRadio">Cash on Delivery</label>
+                        </div>
+                        <div id="cardFields">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="cardName" placeholder="Name on card">
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="cardNumber" placeholder="Credit card number">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-4">
+                                    <input type="text" class="form-control" name="expMonth" placeholder="MM">
+                                </div>
+                                <div class="col-4">
+                                    <input type="text" class="form-control" name="expYear" placeholder="YYYY">
+                                </div>
+                                <div class="col-4">
+                                    <input type="text" class="form-control" name="cvv" placeholder="CVV">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Order Summary (4/12 width) -->
+                    <div class="col-lg-4">
+                        <div class="order-summary-box mt-4 mt-lg-0" style="max-width:420px; margin-left:auto; margin-right:auto; width:100%;">
+                            <h4 class="mb-3">Order Summary</h4>
+                            <table class="table order-summary-table mb-4">
+                                <thead>
+                                    <tr>
+                                        <th>Book</th>
+                                        <th class="text-center">Quantity</th>
+                                        <th class="text-end">Price</th>
+                                        <th class="text-end">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="item : ${cart.items}">
+                                        <td class="book-cell">
+                                            <div th:text="${item.book.title}" style="font-weight:600;"></div>
+                                            <div th:text="${item.book.author}" class="text-muted small"></div>
+                                        </td>
+                                        <td class="text-center" th:text="${item.quantity}"></td>
+                                        <td class="text-end fw-bold" th:text="'$' + ${#numbers.formatDecimal(item.book.price, 1, 2)}"></td>
+                                        <td class="text-end fw-bold" th:text="'$' + ${#numbers.formatDecimal(item.book.price * item.quantity, 1, 2)}"></td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="3" class="text-end"><strong>Total:</strong></td>
+                                        <td class="text-end fw-bold" th:text="'$' + ${#numbers.formatDecimal(cart.total, 1, 2)}"></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                            <button type="submit" class="btn btn-primary w-100" style="font-size:1.2rem;">Confirm Purchase</button>
+                            <a href="/books" class="btn btn-outline-primary w-100 mt-2">Continue Shopping</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div th:replace="fragments/footer :: footer"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/darkmode.js"></script>
+    <div th:replace="fragments/navbar :: darkmode-script"></div>
+    <script>
+        // Show/hide card fields based on payment method
+        document.addEventListener('DOMContentLoaded', function() {
+            const creditCardRadio = document.getElementById('creditCardRadio');
+            const codRadio = document.getElementById('codRadio');
+            const cardFields = document.getElementById('cardFields');
+            creditCardRadio.addEventListener('change', function() {
+                cardFields.style.display = 'block';
+            });
+            codRadio.addEventListener('change', function() {
+                cardFields.style.display = 'none';
+            });
+            // Initial state
+            if (codRadio.checked) cardFields.style.display = 'none';
+            // Show nickname field if save checkbox is checked
+            const saveCheck = document.getElementById('saveNicknameCheck');
+            const nicknameDiv = document.getElementById('nicknameDiv');
+            saveCheck.addEventListener('change', function() {
+                nicknameDiv.style.display = this.checked ? 'block' : 'none';
+            });
+        });
+        // Autofill address/phone when selecting a saved address
+        document.addEventListener('DOMContentLoaded', function() {
+            const contactSelect = document.getElementById('contactId');
+            const addressInput = document.getElementById('address');
+            const phoneInput = document.getElementById('phoneNumber');
+            contactSelect.addEventListener('change', function() {
+                const selected = this.options[this.selectedIndex];
+                if (this.value) {
+                    // Option text: nickname - address (phone)
+                    const text = selected.text;
+                    const match = text.match(/- (.*) \((.*)\)$/);
+                    if (match) {
+                        addressInput.value = match[1];
+                        phoneInput.value = match[2];
+                    }
+                    } else {
+                        addressInput.value = '';
+                        phoneInput.value = '';
+                    }
+                });
+        });
+        // Validate nickname if save checkbox is checked
+        document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+            const saveCheck = document.getElementById('saveNicknameCheck');
+            const nickname = document.getElementById('saveNickname');
+            if (saveCheck.checked && (!nickname.value || nickname.value.trim() === '')) {
+                e.preventDefault();
+                nickname.classList.add('is-invalid');
+                nickname.focus();
+                alert('Please enter a nickname for the address (e.g. Home, Office...)');
+            } else {
+                nickname.classList.remove('is-invalid');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -91,7 +91,7 @@
             </a>
         </div>
 
-        <div th:if="${search != null && !search.isEmpty()}" class="alert alert-info mb-3">
+        <div th:if="${search != null && !search.isEmpty()}" class="alert alert-info mb-3 empty-message">
             <i class="bi bi-search"></i>
             Search results for "<strong th:text="${search}"></strong>"
             <span th:if="${books != null}"> - <span th:text="${books.size()}"></span> book(s) found</span>

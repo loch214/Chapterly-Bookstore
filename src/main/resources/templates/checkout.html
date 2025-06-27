@@ -63,8 +63,8 @@
             <div class="glass-bg p-4 mb-4">
             <form th:action="@{/order/checkout}" method="post" id="checkoutForm">
                 <div class="row">
-                    <!-- Left Column: Shipping and Payment Information (8/12 width) -->
-                    <div class="col-lg-8">
+                    <!-- Left Column: Shipping and Payment Information (7/12 width) -->
+                    <div class="col-lg-7">
                         <h3 class="page-title mb-3">Shipping Information</h3>
                         <div class="mb-3">
                             <label for="contactId" class="form-label">Select a saved address</label>
@@ -99,7 +99,7 @@
                             <input class="form-check-input" type="radio" name="paymentMethod" id="codRadio" value="Cash on Delivery">
                             <label class="form-check-label" for="codRadio">Cash on Delivery</label>
                         </div>
-                        <div id="cardFields">
+                        <div id="cardFields" class="mb-3">
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <input type="text" class="form-control" name="cardName" placeholder="Name on card">
@@ -122,11 +122,11 @@
                         </div>
                     </div>
 
-                    <!-- Right Column: Order Summary (4/12 width) -->
-                    <div class="col-lg-4">
-                        <div class="order-summary-box mt-4 mt-lg-0" style="max-width:420px; margin-left:auto; margin-right:auto; width:100%;">
+                    <!-- Right Column: Order Summary (5/12 width) -->
+                    <div class="col-lg-5 d-flex justify-content-end">
+                        <div class="order-summary-box mt-4 mt-lg-0 w-100" style="max-width:800px; min-width:350px; margin-left:auto; margin-right:0;">
                             <h4 class="mb-3">Order Summary</h4>
-                            <table class="table order-summary-table mb-4">
+                            <table class="table order-summary-table rounded-4 mb-4">
                                 <thead>
                                     <tr>
                                         <th>Book</th>
@@ -175,14 +175,16 @@
             const creditCardRadio = document.getElementById('creditCardRadio');
             const codRadio = document.getElementById('codRadio');
             const cardFields = document.getElementById('cardFields');
-            creditCardRadio.addEventListener('change', function() {
-                cardFields.style.display = 'block';
-            });
-            codRadio.addEventListener('change', function() {
-                cardFields.style.display = 'none';
-            });
-            // Initial state
-            if (codRadio.checked) cardFields.style.display = 'none';
+            function toggleCardFields() {
+                if (creditCardRadio.checked) {
+                    cardFields.classList.remove('hidden-card-fields');
+                } else {
+                    cardFields.classList.add('hidden-card-fields');
+                }
+            }
+            creditCardRadio.addEventListener('change', toggleCardFields);
+            codRadio.addEventListener('change', toggleCardFields);
+            toggleCardFields(); // Initial state
             // Show nickname field if save checkbox is checked
             const saveCheck = document.getElementById('saveNicknameCheck');
             const nicknameDiv = document.getElementById('nicknameDiv');

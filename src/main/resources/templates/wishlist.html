@@ -31,8 +31,7 @@
             <h2 class="mb-4 page-title">My Wishlist</h2>
             
             <div th:if="${wishlist == null || #lists.isEmpty(wishlist)}" class="text-center py-5">
-                <img src="/images/empty-wishlist.svg" alt="Empty Wishlist" style="max-width:180px; opacity:0.5; margin-bottom:1rem;">
-                <h4 class="text-muted">Your wishlist is empty</h4>
+                <h4 class="empty-message">Your wishlist is empty</h4>
                 <a href="/books" class="btn btn-primary mt-3">Browse Books</a>
             </div>
 

@@ -1648,4 +1648,66 @@ body.dark-mode .empty-message {
 }
 body.dark-mode .glass-bg.empty-message {
     color: #e0e7ef !important;
+}
+
+.related-section-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #23263a;
+    padding: 0.6em 1.5em;
+    border-radius: 1.2em;
+    margin-bottom: 1.2rem;
+    margin-top: 0.5rem;
+    display: inline-block;
+    box-shadow: 0 2px 8px rgba(44,62,80,0.07);
+    letter-spacing: 0.01em;
+}
+body.dark-mode .related-section-title {
+    color: #e0e7ef;
+}
+.related-book-card {
+    width: 260px;
+    min-width: 260px;
+    max-width: 260px;
+    height: 340px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 24px rgba(44,62,80,0.07);
+    background: var(--card-bg);
+    overflow: hidden;
+}
+.related-book-card .card-img-top {
+    height: 180px;
+    width: 100%;
+    object-fit: cover;
+    display: block;
+    border-top-left-radius: var(--border-radius);
+    border-top-right-radius: var(--border-radius);
+}
+.related-book-card .card-body {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 1rem;
+    padding-top: 0.7rem;
+}
+.related-book-card .card-title {
+    font-size: 1.08rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    min-height: 2.6em;
+    word-break: break-word;
+}
+.related-book-card .card-text {
+    font-size: 0.98rem;
+    margin-bottom: 0.3rem;
+}
+.related-book-card .btn {
+    margin-top: auto;
+    align-self: stretch;
 } 

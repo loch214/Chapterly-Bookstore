@@ -65,10 +65,10 @@
                 </div>
               </div>
               <hr class="my-4">
-              <h4>More from this category</h4>
-              <div class="scroll-row" id="category-row">
-                  <div class="card" th:each="b : ${relatedCategory}">
-                      <img th:src="${b.imageUrl}" class="card-img-top" style="height: 120px; object-fit: cover;">
+              <div class="related-section-title glass-bg mb-3">More from this category</div>
+              <div class="scroll-row d-flex flex-row gap-3" id="category-row">
+                  <div class="card related-book-card" th:each="b : ${relatedCategory}">
+                      <img th:src="${b.imageUrl}" class="card-img-top" alt="Book Cover">
                       <div class="card-body">
                           <h5 class="card-title" th:text="${b.title}">Book Title</h5>
                           <p class="card-text" th:text="${b.author}">Author</p>
@@ -78,10 +78,10 @@
                   </div>
               </div>
               <hr class="my-4">
-              <h4>More from this author</h4>
-              <div class="scroll-row" id="author-row">
-                  <div class="card" th:each="b : ${relatedAuthor}">
-                      <img th:src="${b.imageUrl}" class="card-img-top" style="height: 120px; object-fit: cover;">
+              <div class="related-section-title glass-bg mb-3">More from this author</div>
+              <div class="scroll-row d-flex flex-row gap-3" id="author-row">
+                  <div class="card related-book-card" th:each="b : ${relatedAuthor}">
+                      <img th:src="${b.imageUrl}" class="card-img-top" alt="Book Cover">
                       <div class="card-body">
                           <h5 class="card-title" th:text="${b.title}">Book Title</h5>
                           <p class="card-text" th:text="${b.category}">Category</p>

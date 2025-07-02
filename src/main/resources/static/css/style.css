@@ -1114,6 +1114,7 @@ body.dark-mode .hero-panel {
 }
 .hero-panel .homepage-subtitle {
     color: #e2e8f0 !important;
+    font-size: 1.35rem;
 }
 
 .featured-books-title {
@@ -1640,4 +1641,11 @@ body.dark-mode .empty-message {
     color: #fff !important;
     text-shadow: none !important;
     font-weight: 700;
+}
+
+.glass-bg.empty-message {
+    color: #23263a !important;
+}
+body.dark-mode .glass-bg.empty-message {
+    color: #e0e7ef !important;
 } 

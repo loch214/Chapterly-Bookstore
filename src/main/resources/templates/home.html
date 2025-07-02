@@ -29,6 +29,7 @@
                                 <button type="submit" class="btn btn-primary">Search</button>
                             </form>
                         </div>
+                        <div id="homeSearchWarning" class="text-danger mt-2" style="display:none; font-size:1rem;"></div>
                         <div id="homeSearchSuggestions" class="search-suggestions-container">
                             <div class="list-group">
                                 <!-- Suggestions will be populated here -->
@@ -276,6 +277,20 @@
             
             window.addEventListener('resize', positionSuggestionsDropdown);
             window.addEventListener('scroll', positionSuggestionsDropdown, true);
+        });
+
+        // Prevent empty search submission and show warning
+        document.getElementById('homeSearchForm').addEventListener('submit', function(e) {
+            const input = document.getElementById('homeSearchInput');
+            const warning = document.getElementById('homeSearchWarning');
+            if (input.value.trim() === '') {
+                e.preventDefault();
+                warning.textContent = 'Please enter a search term.';
+                warning.style.display = 'block';
+                input.focus();
+            } else {
+                warning.style.display = 'none';
+            }
         });
     </script>
 </body>

@@ -207,11 +207,11 @@
                         addressInput.value = match[1];
                         phoneInput.value = match[2];
                     }
-                    } else {
-                        addressInput.value = '';
-                        phoneInput.value = '';
-                    }
-                });
+                } else {
+                    addressInput.value = '';
+                    phoneInput.value = '';
+                }
+            });
         });
         // Validate nickname if save checkbox is checked
         document.getElementById('checkoutForm').addEventListener('submit', function(e) {
@@ -221,9 +221,6 @@
                 e.preventDefault();
                 nickname.classList.add('is-invalid');
                 nickname.focus();
-                alert('Please enter a nickname for the address (e.g. Home, Office...)');
-            } else {
-                nickname.classList.remove('is-invalid');
             }
         });
     </script>

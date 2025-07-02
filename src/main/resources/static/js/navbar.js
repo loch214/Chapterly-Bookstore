@@ -1,14 +1,10 @@
 // Smart auto-hide/reveal navbar on scroll
 (function() {
     function initSmartNavbar() {
-        console.log('[navbar.js] Script loaded and DOM ready');
         const navbar = document.querySelector('.navbar');
         if (!navbar) {
-            alert('[navbar.js] No .navbar element found on this page!');
-            console.warn('[navbar.js] No .navbar element found on this page!');
             return;
         }
-        console.log('[navbar.js] .navbar element found:', navbar);
 
         let lastScrollY = window.scrollY;
         let ticking = false;

@@ -97,15 +97,11 @@ public class AuthController {
                                          @RequestParam(required = false) String quantity,
                                          @RequestParam(required = false) String currentPage,
                                          HttpSession session) {
-        System.out.println("Save intent called with action: " + action + ", bookId: " + bookId + ", quantity: " + quantity + ", currentPage: " + currentPage); // Debug
-        
         // Save the action details instead of just redirect URL
         session.setAttribute("pendingAction", action);
         session.setAttribute("pendingBookId", bookId);
         session.setAttribute("pendingQuantity", quantity);
         session.setAttribute("pendingCurrentPage", currentPage);
-        
-        System.out.println("Saved pending action: " + action); // Debug
         return Collections.singletonMap("status", "saved");
     }
 } 

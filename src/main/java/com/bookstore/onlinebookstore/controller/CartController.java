@@ -26,32 +26,23 @@ public class CartController {
                           @RequestParam(required = false) String buyNow,
                           @RequestParam(required = false) String bookId,
                           @RequestParam(required = false) String quantity) {
-        logger.info("viewCart: buyNow={}, bookId={}, quantity={}", buyNow, bookId, quantity);
         Object user = session.getAttribute("user");
         if (user == null) {
-            logger.info("viewCart: user not logged in, redirecting to login");
             return "redirect:/login";
         }
-        
         // Handle buy now scenario
         if ("true".equals(buyNow) && bookId != null && quantity != null) {
             try {
                 int bookIdInt = Integer.parseInt(bookId);
                 int quantityInt = Integer.parseInt(quantity);
-                logger.info("viewCart: buyNow flow, adding bookId={} quantity={}", bookIdInt, quantityInt);
-                // Add the book to cart with buyNow=true
                 String result = addToCartInternal(bookIdInt, quantityInt, "true", session);
-                logger.info("viewCart: addToCartInternal result={}", result);
                 if ("buy_now_success".equals(result)) {
-                    logger.info("viewCart: redirecting to /order/checkout");
-                    // Redirect to checkout
                     return "redirect:/order/checkout";
                 }
             } catch (NumberFormatException e) {
-                logger.error("viewCart: invalid bookId or quantity", e);
+                // Optionally keep this error log if you want to track bad input
             }
         }
-        
         Cart cart = (Cart) session.getAttribute("cart");
         if (cart == null) {
             cart = new Cart();

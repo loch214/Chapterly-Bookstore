@@ -75,7 +75,7 @@
                 if (result === 'success') {
                     window.location.reload();
                 } else {
-                    alert('Error removing from wishlist.');
+                    console.error('Error removing from wishlist.');
                 }
             })
             .catch(error => console.error('Error:', error));
@@ -90,9 +90,9 @@
             .then(response => response.text())
             .then(result => {
                 if (result === 'success') {
-                    alert('Book added to cart successfully!');
+                    console.log('Book added to cart successfully!');
                 } else {
-                    alert('Error adding book to cart.');
+                    console.error('Error adding book to cart.');
                 }
             })
             .catch(error => console.error('Error:', error));

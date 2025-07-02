@@ -112,9 +112,9 @@ body.dark-mode .main-content::before {
 }
 
 .navbar .nav-link.active, .navbar .nav-link:focus {
-    border-bottom: 2.5px solid var(--accent);
-    color: var(--accent) !important;
-    background: rgba(20,184,166,0.08);
+    border-bottom: 2.5px solid #fff;
+    color: #fff !important;
+    background: rgba(255,255,255,0.08);
 }
 
 .navbar .btn-primary, .btn-primary {
@@ -191,16 +191,15 @@ body.dark-mode .btn-outline-primary.active, body.dark-mode .btn-outline-primary:
     transform: translateY(-2px) scale(1.01);
 }
 
-.card-title {
+.card-title, h4.mb-3, .card-body h4 {
     color: #23263a !important;
-    font-size: 1.18rem;
-    font-weight: 600;
-    margin-bottom: 0.7rem;
-    margin-top: 0.3rem;
-    letter-spacing: 0.01em;
-    text-shadow: 0 2px 8px rgba(44,62,80,0.07);
-    position: relative;
-    z-index: 1;
+    background: none !important;
+    -webkit-background-clip: initial !important;
+    -webkit-text-fill-color: initial !important;
+    font-weight: 800;
+}
+body.dark-mode .card-title, body.dark-mode h4.mb-3, body.dark-mode .card-body h4 {
+    color: #fff !important;
 }
 
 .book-title-accent {
@@ -211,11 +210,6 @@ body.dark-mode .btn-outline-primary.active, body.dark-mode .btn-outline-primary:
     background: linear-gradient(90deg, #3b82f6 0%, #06b6d4 100%);
     margin-top: 0.25rem;
     margin-bottom: 0.5rem;
-}
-
-body.dark-mode .card-title {
-    color: #e0e7ef !important;
-    text-shadow: 0 2px 8px rgba(20,184,166,0.10);
 }
 
 body.dark-mode .book-title-accent {
@@ -578,8 +572,37 @@ body.dark-mode [style*="background-color: white"] {
 /* --- Typography Polish --- */
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Nunito', 'Inter', 'Segoe UI', Arial, sans-serif;
-    font-weight: 800;
+    font-weight: 900;
     letter-spacing: 0.01em;
+    color: #23263a !important;
+    margin-bottom: 0.7em;
+    background: none !important;
+    -webkit-background-clip: initial !important;
+    -webkit-text-fill-color: initial !important;
+}
+h1 {
+    font-size: 2.6rem;
+}
+h2 {
+    font-size: 2.1rem;
+}
+h3 {
+    font-size: 1.5rem;
+}
+.category-card .card-title, .category-title, .category-header {
+    font-family: 'Nunito', 'Inter', 'Segoe UI', Arial, sans-serif;
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #23263a !important;
+    letter-spacing: 0.01em;
+    margin-bottom: 1.1rem;
+    background: none !important;
+    -webkit-background-clip: initial !important;
+    -webkit-text-fill-color: initial !important;
+}
+body.dark-mode h1, body.dark-mode h2, body.dark-mode h3,
+body.dark-mode .category-card .card-title, body.dark-mode .category-title, body.dark-mode .category-header {
+    color: #fff !important;
 }
 
 /* --- Misc Polish --- */
@@ -612,41 +635,6 @@ body.dark-mode .navbar .btn-signup:hover {
         margin-bottom: 0.5rem;
         min-height: 90px;
     }
-}
-
-/* --- Headings & Category Text Polish --- */
-h1, h2, h3 {
-    font-family: 'Nunito', 'Inter', 'Segoe UI', Arial, sans-serif;
-    font-weight: 900;
-    letter-spacing: 0.01em;
-    color: #23263a;
-    margin-bottom: 0.7em;
-}
-h1 {
-    font-size: 2.6rem;
-    background: linear-gradient(90deg, #2563eb 30%, #14b8a6 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-h2 {
-    font-size: 2.1rem;
-    color: #2563eb;
-}
-h3 {
-    font-size: 1.5rem;
-    color: #14b8a6;
-}
-
-.category-card .card-title, .category-title, .category-header {
-    font-family: 'Nunito', 'Inter', 'Segoe UI', Arial, sans-serif;
-    font-size: 1.3rem;
-    font-weight: 800;
-    color: #2563eb;
-    letter-spacing: 0.01em;
-    margin-bottom: 1.1rem;
-    background: linear-gradient(90deg, #2563eb 30%, #14b8a6 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
 }
 
 /* --- Button Colors & Styles: Muted, Professional --- */
@@ -1524,12 +1512,11 @@ body.dark-mode .order-summary-box {
     min-width: 70px;
 }
 .order-summary-table tfoot td {
-    background: transparent;
-    color: #23263a;
+    background: #f3f4f6;
+    color: #23263a !important;
     font-weight: bold;
     font-size: 1.1rem;
-    border-top: none;
-    text-shadow: none !important;
+    border-top: 2px solid #2563eb;
 }
 body.dark-mode .order-summary-table th {
     background: #2563eb;
@@ -1543,8 +1530,8 @@ body.dark-mode .order-summary-table td {
     text-shadow: none !important;
 }
 body.dark-mode .order-summary-table tfoot td {
-    background: transparent;
-    color: #fff;
+    background: #232b3e;
+    color: #fff !important;
     text-shadow: none !important;
 }
 
@@ -1767,4 +1754,11 @@ body.dark-mode .related-section-title {
     white-space: normal;
     margin-bottom: 0.5rem;
     padding-bottom: 0.1em;
+}
+
+.order-confirm-desc, .text-muted {
+    color: #475569 !important;
+}
+body.dark-mode .order-confirm-desc, body.dark-mode .text-muted {
+    color: #e0e7ef !important;
 } 

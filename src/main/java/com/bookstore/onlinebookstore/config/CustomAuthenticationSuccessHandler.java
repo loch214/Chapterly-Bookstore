@@ -2,6 +2,8 @@ package com.bookstore.onlinebookstore.config;
 
 import com.bookstore.onlinebookstore.model.User;
 import com.bookstore.onlinebookstore.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.Authentication;
@@ -20,6 +22,8 @@ import java.io.IOException;
 @Component
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
+    private static final Logger logger = LoggerFactory.getLogger(CustomAuthenticationSuccessHandler.class);
+
     @Autowired
     @Lazy
     private UserService userService;
@@ -34,14 +38,37 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         HttpSession session = request.getSession();
         session.setAttribute("user", user);
 
-        // Check for pending action from before login
+        // Debug: Log all request parameters
+        request.getParameterMap().forEach((k, v) -> logger.info("Request param: {} = {}", k, v != null && v.length > 0 ? v[0] : "null"));
+
+        // Debug: Log session attributes
+        logger.info("onAuthenticationSuccess: pendingAction={}, pendingBookId={}, pendingQuantity={}, pendingCurrentPage={}",
+            session.getAttribute("pendingAction"),
+            session.getAttribute("pendingBookId"),
+            session.getAttribute("pendingQuantity"),
+            session.getAttribute("pendingCurrentPage"));
+
+        // 1. Handle real pending action
         String pendingAction = (String) session.getAttribute("pendingAction");
-        if (pendingAction != null) {
+        if (pendingAction != null && !pendingAction.isEmpty() && !"none".equals(pendingAction)) {
+            logger.info("Handling pending action: {}", pendingAction);
             handlePendingAction(request, response, session, pendingAction);
             return;
         }
 
-        // Check if there's a saved request from Spring Security
+        // 2. Handle pendingCurrentPage (session or request)
+        String pendingCurrentPage = (String) session.getAttribute("pendingCurrentPage");
+        if ((pendingCurrentPage == null || pendingCurrentPage.isEmpty() || pendingCurrentPage.contains("/login")) && request.getParameter("pendingCurrentPage") != null) {
+            pendingCurrentPage = request.getParameter("pendingCurrentPage");
+        }
+        logger.info("Final pendingCurrentPage value before redirect: {}", pendingCurrentPage);
+        if (pendingCurrentPage != null && !pendingCurrentPage.isEmpty() && !pendingCurrentPage.contains("/login")) {
+            session.removeAttribute("pendingCurrentPage");
+            response.sendRedirect(pendingCurrentPage);
+            return;
+        }
+
+        // 3. Handle Spring Security saved request
         SavedRequest savedRequest = requestCache.getRequest(request, response);
         if (savedRequest != null) {
             String targetUrl = savedRequest.getRedirectUrl();
@@ -55,7 +82,8 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
             return;
         }
 
-        // Default redirect to home page
+        // 4. Fallback to home
+        logger.info("No valid pendingCurrentPage or savedRequest, redirecting to home page.");
         response.sendRedirect("/");
     }
 
@@ -64,6 +92,9 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         String pendingQuantity = (String) session.getAttribute("pendingQuantity");
         String pendingCurrentPage = (String) session.getAttribute("pendingCurrentPage");
 
+        logger.info("handlePendingAction: action={}, bookId={}, quantity={}, currentPage={}",
+            pendingAction, pendingBookId, pendingQuantity, pendingCurrentPage);
+
         // Clear pending action attributes from session
         session.removeAttribute("pendingAction");
         session.removeAttribute("pendingBookId");
@@ -71,22 +102,22 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         session.removeAttribute("pendingCurrentPage");
 
         if ("addToCart".equals(pendingAction)) {
-            // Redirect back to the original page with parameters to trigger the add to cart action
             String referer = pendingCurrentPage != null && !pendingCurrentPage.isEmpty() ? pendingCurrentPage : request.getHeader("Referer");
             if (referer != null && !referer.contains("/login")) {
                 String separator = referer.contains("?") ? "&" : "?";
                 String redirectUrl = referer + separator + "addToCart=true&bookId=" + pendingBookId + "&quantity=" + pendingQuantity;
+                logger.info("Redirecting for addToCart to: {}", redirectUrl);
                 response.sendRedirect(redirectUrl);
                 return;
             }
         } else if ("buyNow".equals(pendingAction)) {
-            // For buy now, redirect to cart with buyNow parameter
             String redirectUrl = "/cart?buyNow=true&bookId=" + pendingBookId + "&quantity=" + pendingQuantity;
+            logger.info("Redirecting for buyNow to: {}", redirectUrl);
             response.sendRedirect(redirectUrl);
             return;
         }
 
-        // Fallback redirect if action handling is not specific
+        logger.info("Fallback redirect to home page from handlePendingAction");
         response.sendRedirect("/");
     }
 } 

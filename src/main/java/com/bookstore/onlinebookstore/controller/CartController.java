@@ -3,6 +3,8 @@ package com.bookstore.onlinebookstore.controller;
 import com.bookstore.onlinebookstore.model.Book;
 import com.bookstore.onlinebookstore.model.BookInventory;
 import com.bookstore.onlinebookstore.model.Cart;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +16,8 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/cart")
 public class CartController {
 
+    private static final Logger logger = LoggerFactory.getLogger(CartController.class);
+
     @Autowired
     private BookInventory bookInventory;
 
@@ -22,8 +26,10 @@ public class CartController {
                           @RequestParam(required = false) String buyNow,
                           @RequestParam(required = false) String bookId,
                           @RequestParam(required = false) String quantity) {
+        logger.info("viewCart: buyNow={}, bookId={}, quantity={}", buyNow, bookId, quantity);
         Object user = session.getAttribute("user");
         if (user == null) {
+            logger.info("viewCart: user not logged in, redirecting to login");
             return "redirect:/login";
         }
         
@@ -32,15 +38,17 @@ public class CartController {
             try {
                 int bookIdInt = Integer.parseInt(bookId);
                 int quantityInt = Integer.parseInt(quantity);
-                
+                logger.info("viewCart: buyNow flow, adding bookId={} quantity={}", bookIdInt, quantityInt);
                 // Add the book to cart with buyNow=true
                 String result = addToCartInternal(bookIdInt, quantityInt, "true", session);
+                logger.info("viewCart: addToCartInternal result={}", result);
                 if ("buy_now_success".equals(result)) {
+                    logger.info("viewCart: redirecting to /order/checkout");
                     // Redirect to checkout
                     return "redirect:/order/checkout";
                 }
             } catch (NumberFormatException e) {
-                // Handle invalid parameters
+                logger.error("viewCart: invalid bookId or quantity", e);
             }
         }
         

@@ -99,14 +99,55 @@
     <!-- Footer -->
     <div th:replace="fragments/footer :: footer"></div>
 
+    <!-- Login Required Modal -->
+    <div class="modal fade" id="loginRequiredModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Login Required</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Please log in or sign up to continue.</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" id="modalLoginBtn" class="btn btn-primary">Login</a>
+                    <a href="/signup" class="btn btn-success">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/js/darkmode.js"></script>
     <div th:replace="fragments/navbar :: darkmode-script"></div>
     <script>
-        // Helper for login modal (if needed)
+        let pendingLoginParams = null;
         const loginRequiredModal = {
-            show: function() { window.location.href = '/login'; }
+            show: function(action, bookId, quantity, currentPage) {
+                pendingLoginParams = { action, bookId, quantity, currentPage };
+                const modal = new bootstrap.Modal(document.getElementById('loginRequiredModal'));
+                modal.show();
+            }
         };
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginBtn = document.getElementById('modalLoginBtn');
+            if (loginBtn) {
+                loginBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    let url = '/login';
+                    if (pendingLoginParams) {
+                        const params = [];
+                        if (pendingLoginParams.action) params.push('pendingAction=' + encodeURIComponent(pendingLoginParams.action));
+                        if (pendingLoginParams.bookId) params.push('pendingBookId=' + encodeURIComponent(pendingLoginParams.bookId));
+                        if (pendingLoginParams.quantity) params.push('pendingQuantity=' + encodeURIComponent(pendingLoginParams.quantity));
+                        if (pendingLoginParams.currentPage) params.push('pendingCurrentPage=' + encodeURIComponent(pendingLoginParams.currentPage));
+                        if (params.length > 0) url += '?' + params.join('&');
+                    }
+                    window.location.href = url;
+                });
+            }
+        });
 
         function getBookId() {
             // Get bookId from data attribute
@@ -126,9 +167,8 @@
                     if (data.loggedIn) {
                         callback();
                     } else {
-                        // Save the user's intent before redirecting
+                        const currentPage = window.location.href;
                         if (action) {
-                            const currentPage = window.location.href;
                             fetch('/auth/save-intent', {
                                 method: 'POST',
                                 headers: {
@@ -136,13 +176,30 @@
                                 },
                                 body: `action=${action}&bookId=${bookId || ''}&quantity=${quantity || ''}&currentPage=${encodeURIComponent(currentPage)}`
                             });
+                        } else {
+                            fetch('/auth/save-intent', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded',
+                                },
+                                body: `action=none&currentPage=${encodeURIComponent(currentPage)}`
+                            });
                         }
-                        loginRequiredModal.show();
+                        loginRequiredModal.show(action, bookId, quantity, currentPage);
                     }
                 })
                 .catch(() => {
                     alert('Could not verify authentication status. Please check your connection.');
                 });
+        }
+
+        function buyNow() {
+            const bookId = getBookId();
+            const quantity = getQuantity();
+            checkAuth(() => {
+                // If logged in, go directly to cart with buyNow params
+                window.location.href = '/cart?buyNow=true&bookId=' + bookId + '&quantity=' + quantity;
+            }, 'buyNow', bookId, quantity);
         }
     </script>
 </body>

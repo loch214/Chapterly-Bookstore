@@ -169,7 +169,7 @@
                     <p>Please log in or sign up to continue.</p>
                 </div>
                 <div class="modal-footer">
-                    <a href="/login" class="btn btn-primary">Login</a>
+                    <a href="#" id="modalLoginBtn" class="btn btn-primary">Login</a>
                     <a href="/signup" class="btn btn-success">Sign Up</a>
                 </div>
             </div>
@@ -180,7 +180,32 @@
     <script src="/js/darkmode.js"></script>
     <div th:replace="fragments/navbar :: darkmode-script"></div>
     <script>
-        const loginRequiredModal = new bootstrap.Modal(document.getElementById('loginRequiredModal'));
+        let pendingLoginParams = null;
+        const loginRequiredModal = {
+            show: function(action, bookId, quantity, currentPage) {
+                pendingLoginParams = { action, bookId, quantity, currentPage };
+                const modal = new bootstrap.Modal(document.getElementById('loginRequiredModal'));
+                modal.show();
+            }
+        };
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginBtn = document.getElementById('modalLoginBtn');
+            if (loginBtn) {
+                loginBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    let url = '/login';
+                    if (pendingLoginParams) {
+                        const params = [];
+                        if (pendingLoginParams.action) params.push('pendingAction=' + encodeURIComponent(pendingLoginParams.action));
+                        if (pendingLoginParams.bookId) params.push('pendingBookId=' + encodeURIComponent(pendingLoginParams.bookId));
+                        if (pendingLoginParams.quantity) params.push('pendingQuantity=' + encodeURIComponent(pendingLoginParams.quantity));
+                        if (pendingLoginParams.currentPage) params.push('pendingCurrentPage=' + encodeURIComponent(pendingLoginParams.currentPage));
+                        if (params.length > 0) url += '?' + params.join('&');
+                    }
+                    window.location.href = url;
+                });
+            }
+        });
 
         // Search Autocomplete for Books Page
         document.addEventListener('DOMContentLoaded', function() {
@@ -324,11 +349,13 @@
                 if (data.loggedIn) {
                     callback();
                 } else {
+                    const currentPage = window.location.href;
                     if (action) {
-                        const currentPage = window.location.href;
-                        fetch('/auth/save-intent', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded', }, body: `action=${action}&bookId=${bookId || ''}&quantity=${quantity || ''}¤tPage=${encodeURIComponent(currentPage)}` });
+                        fetch('/auth/save-intent', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded', }, body: `action=${action}&bookId=${bookId || ''}&quantity=${quantity || ''}&currentPage=${encodeURIComponent(currentPage)}` });
+                    } else {
+                        fetch('/auth/save-intent', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded', }, body: `action=none&currentPage=${encodeURIComponent(currentPage)}` });
                     }
-                    loginRequiredModal.show();
+                    loginRequiredModal.show(action, bookId, quantity, currentPage);
                 }
             })
             .catch(() => { alert('Could not verify authentication status. Please check your connection.'); });

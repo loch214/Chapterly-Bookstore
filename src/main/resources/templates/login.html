@@ -73,16 +73,6 @@
     <div th:replace="fragments/navbar :: darkmode-script"></div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Only save intent if not coming from login or signup
-            const referrer = document.referrer;
-            if (referrer && !referrer.includes('/login') && !referrer.includes('/signup')) {
-                fetch('/auth/save-intent', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: `action=none&currentPage=${encodeURIComponent(referrer)}`
-                });
-            }
-            // Restore pending action from query params if present
             const urlParams = new URLSearchParams(window.location.search);
             const action = urlParams.get('pendingAction');
             const bookId = urlParams.get('pendingBookId');
@@ -94,12 +84,21 @@
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     body: `action=${action || ''}&bookId=${bookId || ''}&quantity=${quantity || ''}&currentPage=${encodeURIComponent(currentPage || '')}`
                 });
+            } else {
+                // Only save intent with action=none if no real action is present
+                const referrer = document.referrer;
+                if (referrer && !referrer.includes('/login') && !referrer.includes('/signup')) {
+                    fetch('/auth/save-intent', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: `action=none&currentPage=${encodeURIComponent(referrer)}`
+                    });
+                }
             }
             // Set hidden input for pendingCurrentPage if present in URL
-            const pendingCurrentPage = urlParams.get('pendingCurrentPage');
-            if (pendingCurrentPage) {
+            if (currentPage) {
                 const input = document.getElementById('pendingCurrentPageInput');
-                if (input) input.value = pendingCurrentPage;
+                if (input) input.value = currentPage;
             }
         });
     </script>

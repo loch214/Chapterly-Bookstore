@@ -782,7 +782,7 @@ body.dark-mode .category-card .btn, body.dark-mode .category-card .btn span, bod
 }
 body.dark-mode .page-title, body.dark-mode .glass-bg, body.dark-mode .sort-label {
     background: rgba(30,41,59,0.75);
-    color: #e0e7ef;
+    color: #fff;
 }
 
 /* --- Order History Table Styles --- */
@@ -1747,13 +1747,24 @@ body.dark-mode .related-section-title {
 .book-title-details {
     font-family: inherit;
     font-size: 2.2rem;
-    font-weight: 500;
-    color: #2563eb !important;
+    font-weight: 800;
+    color: #23263a;
     line-height: 1.25;
     word-break: break-word;
     white-space: normal;
     margin-bottom: 0.5rem;
     padding-bottom: 0.1em;
+}
+body.dark-mode .book-title-details {
+    color: #fff;
+}
+.book-details-section h4,
+.book-details-section .card-text,
+.book-details-section p,
+.book-details-section strong,
+.book-details-section span,
+.book-details-section {
+    font-weight: 400 !important;
 }
 
 .order-confirm-desc, .text-muted {

@@ -30,8 +30,8 @@
                 <div class="col-md-4">
                     <img th:src="${book.imageUrl}" class="img-fluid rounded shadow" alt="Book Cover">
                 </div>
-                <div class="col-md-8">
-                        <h1 th:text="${book.title}" class="mb-2 book-title-details" style="font-weight: 500; color: #23263a !important;">Book Title</h1>
+                <div class="col-md-8 book-details-section">
+                        <h1 th:text="${book.title}" class="mb-2 book-title-details">Book Title</h1>
                         <h4 class="text-muted mb-3" th:text="${book.author}">Author Name</h4>
                     <div class="mb-2">
                         <span th:each="star : ${#numbers.sequence(1, T(java.lang.Math).round(book.rating))}" class="star">★</span>
@@ -200,6 +200,32 @@
                 // If logged in, go directly to cart with buyNow params
                 window.location.href = '/cart?buyNow=true&bookId=' + bookId + '&quantity=' + quantity;
             }, 'buyNow', bookId, quantity);
+        }
+
+        function addToCart() {
+            const bookId = getBookId();
+            const quantity = getQuantity();
+            checkAuth(() => {
+                // If logged in, add to cart via POST and show feedback
+                fetch('/cart/add', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `bookId=${bookId}&quantity=${quantity}`
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // Optionally show a success message or update cart UI
+                        alert('Book added to cart!');
+                    } else {
+                        alert('Failed to add to cart.');
+                    }
+                })
+                .catch(() => {
+                    alert('Error adding to cart.');
+                });
+            }, 'addToCart', bookId, quantity);
         }
     </script>
 </body>

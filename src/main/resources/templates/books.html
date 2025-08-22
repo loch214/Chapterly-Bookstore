@@ -109,14 +109,14 @@
                         <p class="card-text" th:text="'Stock: ' + ${book.stock}">Stock: 10</p>
                         <p class="card-text" th:text="'Rating: ' + ${book.rating}">Rating: 4.5</p>
                         <div class="flex-grow-1"></div>
-                        <a th:href="@{/book/{id}(id=${book.id})}" class="btn btn-primary">View Details</a>
-                        <div class="d-flex gap-2 mt-2">
-                            <button class="btn btn-warning btn-add-to-cart flex-fill" th:onclick="'addToCart(' + ${book.id} + ')'">Add to Cart</button>
-                            <button class="btn btn-wishlist" th:onclick="'addToWishlist(' + ${book.id} + ')'" title="Add to Wishlist">
+                        <a th:href="@{/book/{id}(id=${book.id})}" class="btn btn-primary mb-2 w-100">View Details</a>
+                        <div class="d-flex gap-2 mb-2 align-items-center">
+                            <button class="btn btn-warning btn-add-to-cart flex-grow-1" style="min-width:0;" th:onclick="'addToCart(' + ${book.id} + ')'">Add to Cart</button>
+                            <button class="btn btn-wishlist d-flex align-items-center justify-content-center" style="width:36px; height:36px; min-width:36px; max-width:36px; padding:0; border-radius:50%;" th:onclick="'addToWishlist(' + ${book.id} + ')'" title="Add to Wishlist">
                                 <i class="bi bi-heart-fill"></i>
                             </button>
                         </div>
-                        <button class="btn btn-success btn-buy-now mt-2 w-100" th:onclick="'buyNow(' + ${book.id} + ')'">Buy Now</button>
+                        <button class="btn btn-success btn-buy-now w-100 mt-auto" th:onclick="'buyNow(' + ${book.id} + ')'">Buy Now</button>
                     </div>
                 </div>
             </div>
